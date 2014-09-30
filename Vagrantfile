@@ -155,6 +155,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell",
     inline: "echo setting timezone to #{server_timezone}; ln -sf /usr/share/zoneinfo/#{server_timezone} /etc/localtime"
 
+  # optimize base box
+  config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", 
+    privileged: true
+
   # Provision Base Packages
   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap]
 
