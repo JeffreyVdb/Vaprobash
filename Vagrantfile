@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Config Github Settings
-github_username = "fideloper"
+github_username = "jeffreyvdb"
 github_repo     = "Vaprobash"
 github_branch   = "1.0.1"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
@@ -17,9 +17,10 @@ hostname        = "vaprobash.dev"
 #   10.0.0.1    - 10.255.255.254
 #   172.16.0.1  - 172.31.255.254
 #   192.168.0.1 - 192.168.255.254
-server_ip             = "192.168.22.10"
-server_memory         = "384" # MB
-server_swap           = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
+server_ip             = "172.16.12.100"
+server_memory         = "2048" # MB
+server_swap           = "1024" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
+server_cpus	      = "2"
 
 # UTC        for Universal Coordinated Time
 # EST        for Eastern Standard Time
@@ -119,6 +120,14 @@ Vagrant.configure("2") do |config|
     # Set server memory
     vb.vmx["memsize"] = server_memory
 
+  end
+
+  config.vm.provider "vmware_workstation" do |vmware, override|
+    override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
+
+    # Set server memory
+    vmware.vmx["memsize"] 	= server_memory
+    vmware.vmx["numvcpus"] 	= server_cpus
   end
 
   # If using Vagrant-Cachier
